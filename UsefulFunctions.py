@@ -1,5 +1,9 @@
 import math
 
+def primes (n): 
+    """Returns a list of primes up to and including n (if prime)"""
+    return noBlanks(sieve(n))  
+
 def sieve (n):
     """Returns a list, (0,n), where the ith element is i if prime and 0 otherwise"""
     primes = range (0,n+1)
@@ -9,6 +13,22 @@ def sieve (n):
             primes [i*j] = 0
     return primes
 
+def addToSieve(n, sieve): 
+    """Takes a sieved list of primes (with spaces still in) and an integer n. 
+    Returns a sieve up to n"""
+    lenSieve = len(sieve) 
+    if lenSieve > n: 
+        return sieve 
+    primes = sieve 
+    for i in range (lenSieve,n+1): 
+        primes.append(i) 
+    for i in range (2,n): 
+        if i == 0: 
+            break
+        for j in range(2,(int)(n/i)+1): 
+            primes[i*j] = 0
+    return primes 
+
 def noBlanks (li):
     """takes a list and returns all non zero elements of that list, as a list"""
     retVal = []
@@ -16,6 +36,26 @@ def noBlanks (li):
         if li[i] != 0:
             retVal.append(li[i])
     return retVal
+
+def distPrimeFacts (n,lSieve): 
+    """returns a list of the distinct prime factors of positive integer n.
+    Take lSieve to be a sieve, adds to it if it's length is less than n.
+    """ 
+    if type(n) != int or n < 1: 
+        print "Error in distinctPrimeFactors, only positive integers allowed"
+        return [] 
+    if lSieve == []: 
+        newSieve = sieve(n) 
+    else: 
+        newSieve = addToSieve(n,lSieve) 
+    primes = noBlanks(newSieve) 
+    distPrimeFacts = [] 
+    for prime in primes: 
+        if n % prime == 0: 
+            distPrimeFacts.append(prime) 
+            while n % prime == 0: 
+               n = n/prime 
+    return distPrimeFacts, newSieve    
 
 
 def pentN (n):
@@ -116,14 +156,9 @@ def isPandigital(n):
 
 if __name__ == "__main__":
     "Should put some testing stuff in here for useful functions, haven't yet"""
+    print "This is a module of useful functions for Project Euler problems"
 
 
-
-def problem40():
-    conc = ""
-    for i in range (1,1000000):
-        conc = conc + str(i)
-    return int(conc[1])*int(conc[10])*int(conc[100])*int(conc[1000])*int(conc[10000])*int(conc[100000])*int(conc[1000000])
 
 
 
