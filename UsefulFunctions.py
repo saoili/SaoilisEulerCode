@@ -159,7 +159,4 @@ if __name__ == "__main__":
     print "This is a module of useful functions for Project Euler problems"
 
 
-#quick test
-
-
 
