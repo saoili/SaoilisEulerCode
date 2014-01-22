@@ -108,25 +108,9 @@ def nthDigit (x,n):
     return int(round(x%pow(10,n)/pow(10,n-1)))
 
 def numDigits (n):
-    """returns the number of digits in a positive integer 
-    with up to 9 digits"""
-    if n < 10:
-        return 1
-    if n < 100:
-        return 2
-    if n < 1000:
-        return 3
-    if n < 10000:
-        return 4
-    if n < 100000:
-        return 5
-    if n < 1000000:
-        return 6
-    if n < 10000000:
-        return 7
-    if n < 100000000:
-        return 8
-    return 9
+    """returns the number of digits in an integer"""
+    return len(str(abs(n)))
+
 
 def isPrime(n):
     """returns True if prime, False if not. 
@@ -253,7 +237,8 @@ if __name__ == "__main__":
     returns the number of digits in a positive integer 
     with up to 9 digits"""
     isNumDigitsWorking = (numDigits(1) == 1 and numDigits(11) == 2 and 
-                          numDigits(111) == 3 and numDigits(111111111) == 9)
+                          numDigits(111) == 3 and numDigits(111111111) == 9 and
+                          numDigits(-11) == 2)
     if not isNumDigitsWorking:
         allFine = False
 
