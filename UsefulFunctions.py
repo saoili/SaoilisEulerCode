@@ -7,11 +7,11 @@ def primes (n):
 def sieve (n):
     """Returns a list, [0, ... ,n], where the ith element is 
     i if prime and 0 otherwise"""
-    primes = range (0,n+1)
-    primes [1] = 0
+    primes = [i for i in range (0,n+1)]
+    primes[1] = 0
     for i in range (2,n):
-        for j in range (2,(int)(n/i)+1):
-            primes [i*j] = 0
+        for j in range (2,(int)(n//i)+1):
+            primes[i*j] = 0
     return primes
 
 def addToSieve(n, sieve): 
@@ -26,7 +26,7 @@ def addToSieve(n, sieve):
     for i in range (2,n): 
         if i == 0: 
             break
-        for j in range(2,(int)(n/i)+1): 
+        for j in range(2,(int)(n//i)+1): 
             primes[i*j] = 0
     return primes 
 
@@ -45,7 +45,7 @@ def distPrimeFacts (n,lSieve):
     Take lSieve to be a sieve, adds to it if it's length is less than n.
     """ 
     if type(n) != int or n < 1: 
-        print "Error in distinctPrimeFactors, only positive integers allowed"
+        print("Error in distinctPrimeFactors, only positive integers allowed")
         return [] 
     if lSieve == []: 
         newSieve = sieve(n) 
@@ -57,7 +57,7 @@ def distPrimeFacts (n,lSieve):
         if n % prime == 0: 
             distPrimeFacts.append(prime) 
             while n % prime == 0: 
-               n = n/prime 
+               n = n//prime 
     return distPrimeFacts, newSieve    
 
 def distinctPrimeFactors (n):
@@ -70,7 +70,7 @@ def distinctPrimeFactors (n):
 
 def pentN (n):
     """takes integer n, returns the nth pentagonal number"""
-    return n*(3*n-1)/2
+    return n*(3*n-1)//2
 
 def isPent(n):
     """takes integer n, returns True if it is a pentagonal number, 
@@ -85,12 +85,12 @@ def nthPent(n):
     it is if it is one and 0 otherwise"""
     if not isPent(n):
         return 0
-    return (int)((math.sqrt(24*n+1)+1)/6)
+    return (int)((math.sqrt(24*n+1)+1)//6)
 
 
 def triN (n):
     """takes integer n, returns the nth triangular number"""
-    return n*(n+1)/2
+    return n*(n+1)//2
 
 
 def hexN(n):
@@ -105,7 +105,7 @@ def nthDigit (x,n):
     if n < 0 or n > numDigits(x):
         return -1
     x = reverse(x)
-    return int(round(x%pow(10,n)/pow(10,n-1)))
+    return int(round(x%pow(10,n)//pow(10,n-1)))
 
 def numDigits (n):
     """returns the number of digits in an integer"""
@@ -119,7 +119,7 @@ def isPrime(n):
         return False
     if n % 2 == 0:
         return False
-    for i in range (1,(int(pow(n, .5))+1)/2):
+    for i in range (1,(int(pow(n, .5))+1)//2):
         if n % (i*2+1) == 0:
             return False
     return True
@@ -131,7 +131,7 @@ def reverse(n):
         return n
     retVal = 0
     for i in range (0,digs):
-        retVal = retVal + n % pow(10,digs-i)/pow(10,digs-(1+i)) * pow(10,i)
+        retVal = retVal + n % pow(10,digs-i)//pow(10,digs-(1+i)) * pow(10,i)
     return retVal
 
 def isPandigital(n):
@@ -146,15 +146,14 @@ def isPandigital(n):
     digs = []
     while blah >= 1:
         digs.append(blah%10)
-        blah = blah / 10
+        blah = blah//10
     return (
        1 in digs and 2 in digs and 3 in digs and 4 in digs and 5 in digs and
        6 in digs and 7 in digs and 8 in digs and 9 in digs and 0 in digs)
 
 if __name__ == "__main__":
-    print "This is a module of useful functions for Project Euler problems"
-    print "Some basic testing below, "
-    "will replace with unittest framework later"
+    print("This is a module of useful functions for Project Euler problems")
+    print("Some basic testing below, will replace with unittest framework later")
     allFine = True
     
     """test primes (n): 
@@ -266,11 +265,11 @@ if __name__ == "__main__":
     
 
     if allFine:
-        print "Excellent, everything worked, carry on"   
+        print("Excellent, everything worked, carry on"   )
     else:
-        print "oh oh, something failed"
-        print "primes function works for 100: " + str (isPrimeWorking)
-        print "sieve function works for 10: " + str (isSieveWorking)
+        print("oh oh, something failed")
+        print("primes function works for 100: " + str (isPrimeWorking))
+        print("sieve function works for 10: " + str (isSieveWorking))
         print ("addToSieve function works for 20 and sieve up to 10: " +
               str (isAddToSieveWorking))
         print ("noBlanks function works for [0,1,2,3,0,0,5,0]: " +
