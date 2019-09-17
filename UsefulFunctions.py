@@ -174,71 +174,106 @@ def isPandigital(n):
         6 in digs and 7 in digs and 8 in digs and 9 in digs and 0 in digs)
 
 
-if __name__ == "__main__":
-    print("This is a module of useful functions for Project Euler problems")
-    print("Some basic testing below, will replace with unittest framework later")
+def print_test_failure(func, inputs, expected, actual):
+    print(f"for function {func.__name__}, with input(s) {inputs}", end=" ")
+    print(f"expected was {expected} and actual was {actual}")
+
+
+def run_tests():
     allFine = True
 
     """test primes (n): 
     Returns a list of primes up to and including n (if prime)"""
-    isPrimeWorking = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
-                      53, 59, 61, 67, 71, 73, 79, 83, 89, 97] == primes(100)
-    if not isPrimeWorking:
+    expected = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
+                53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+    actual = primes(100)
+    if expected != actual:
         allFine = False
+        print_test_failure(primes, 100, expected, actual)
 
     """test sieve (n):
     Returns a list, [0, ... ,n], where the ith element is i if prime 
     and 0 otherwise"""
-    isSieveWorking = [0, 0, 2, 3, 0, 5, 0, 7, 0, 0, 0] == sieve(10)
-    if not isSieveWorking:
+    expected = [0, 0, 2, 3, 0, 5, 0, 7, 0, 0, 0]
+    actual = sieve(10)
+    if expected != actual:
         allFine = False
+        print_test_failure(sieve, 10, expected, actual)
 
     """test addToSieve(n, sieve): 
     Takes a sieved list of primes (with spaces still in) 
     and an integer n. Returns a sieve up to n"""
-    isAddToSieveWorking = [0, 0, 2, 3, 0, 5, 0, 7, 0, 0, 0, 11, 0, 13, 0, 0, 0, 17, 0,
-                           19, 0] == addToSieve(20, sieve(10))
-    if not isAddToSieveWorking:
+    expected = [0, 0, 2, 3, 0, 5, 0, 7, 0, 0, 0, 11, 0, 13, 0, 0, 0, 17, 0, 19, 0]
+    actual = addToSieve(20, sieve(10))
+    if expected != actual:
         allFine = False
+        print_test_failure(addToSieve, (20, sieve(10)), expected, actual)
 
     """test noBlanks (li):
     takes a list and returns all non zero elements of that list, 
     as a list"""
-    isNoBlanksWorking = [1, 2, 3, 5] == noBlanks([0, 1, 2, 3, 0, 0, 5, 0])
-    if not isNoBlanksWorking:
+    expected = [1, 2, 3, 5]
+    actual = noBlanks([0, 1, 2, 3, 0, 0, 5, 0])
+    if expected != actual:
         allFine = False
+        print_test_failure(noBlanks, [0, 1, 2, 3, 0, 0, 5, 0], expected, actual)
 
     """test distinctPrimeFactors (n,lSieve): 
     returns a list of the distinct prime factors of positive integer n
     """
-    isDistinctPrimeFactorsWorking = distinctPrimeFactors(70) == [2, 5, 7]
-    if not isDistinctPrimeFactorsWorking:
+    expected = distinctPrimeFactors(70) 
+    actual = [2, 5, 7]
+    if expected != actual:
         allFine = False
+        print_test_failure(distinctPrimeFactors, 70, expected, actual)
 
     """test divisors(n):
     returns a list of all divisors of n
     """
-    isDivisorsWorking = (
-        divisors(1) == [1] and divisors(30) == [1, 2, 3, 5, 6, 10, 15, 30]
-        and divisors(7) == [1, 7]
-    )
-    if not isDivisorsWorking:
+    expected1 = [1]
+    expected2 = [1, 2, 3, 5, 6, 10, 15, 30]
+    expected3 = [1, 7]
+    actual1 = divisors(1)
+    actual2 = divisors(30)
+    actual3 = divisors(7)
+    if expected1 != actual1 or expected2 != actual2 or expected3 != actual3:
         allFine = False
+        print_test_failure(divisors, 1, expected1, actual1)
+        print_test_failure(divisors, 30, expected2, actual2)
+        print_test_failure(divisors, 7, expected3, actual3)
 
     """test pentN (n):
     takes integer n, returns the nth pentagonal number"""
-    isPentNWorking = pentN(1) == 1 and pentN(10) == 145 and pentN(20) == 590
-    if not isPentNWorking:
+    expected1 = 1
+    expected2 = 145
+    expected3 = 590
+    actual1 = pentN(1)
+    actual2 = pentN(10)
+    actual3 = pentN(20)
+
+    if expected1 != actual1 or expected2 != actual2 or expected3 != actual3:
         allFine = False
+        print_test_failure(pentN, 1, expected1, actual1)
+        print_test_failure(pentN, 10, expected2, actual2)
+        print_test_failure(pentN, 20, expected3, actual3)
 
     """test isPent(n):
     takes integer n, returns True if it is a pentagonal number, 
     else False
     returns False for negative numbers"""
-    isIsPentWorking = not isPent(377) and isPent(782) and not isPent(-10)
-    if not isIsPentWorking:
-        allFine = False
+    expected1 = False
+    expected2 = True
+    expected3 = False
+    actual1 = isPent(377)
+    actual2 = isPent(782)
+    actual3 = isPent(-10)
 
+    if expected1 != actual1 or expected2 != actual2 or expected3 != actual3:
+        allFine = False
+        print_test_failure(isPent, 377, expected1, actual1)
+        print_test_failure(isPent, 782, expected2, actual2)
+        print_test_failure(isPent, -10, expected3, actual3)
+    
     """test nthPent(n):
     takes integer n, returns what number pentagonal number it is 
     if it is one and 0 otherwise"""
@@ -268,11 +303,24 @@ if __name__ == "__main__":
     """test numDigits (n):
     returns the number of digits in a positive integer 
     with up to 9 digits"""
-    isNumDigitsWorking = (numDigits(1) == 1 and numDigits(11) == 2 and
-                          numDigits(111) == 3 and numDigits(111111111) == 9 and
-                          numDigits(-11) == 2)
-    if not isNumDigitsWorking:
+    expected1 = 1
+    expected2 = 2
+    expected3 = 9
+    expected4 = 2
+    actual1 = numDigits(1)
+    actual2 = numDigits(11)
+    actual3 = numDigits(111345151)
+    actual4 = numDigits(-78)
+
+    if (
+        expected1 != actual1 or expected2 != actual2
+        or expected3 != actual3 or expected4 != actual4
+    ):
         allFine = False
+        print_test_failure(numDigits, 1, expected1, actual1)
+        print_test_failure(numDigits, 11, expected2, actual2)
+        print_test_failure(numDigits, 111345151, expected3, actual3)
+        print_test_failure(numDigits, -78, expected4, actual4)
 
     """test isPrime(n):
     returns True if prime, False if not. 
@@ -290,44 +338,27 @@ if __name__ == "__main__":
 
     """test isPandigital(n):
     returns true if n is a 1 to 9 pandigital"""
-    isPandigitalWorking = (isPandigital(1223334444555567890) and
-                           isPandigital(1023456879) and not
-                           isPandigital(123456789))
-    if not isPandigitalWorking:
+    expected1 = True
+    expected2 = True
+    expected3 = False
+    actual1 = isPandigital(1223334444555567890)
+    actual2 = isPandigital(1023456879)
+    actual3 = isPandigital(123456789)
+
+    if expected1 != actual1 or expected2 != actual2 or expected3 != actual3:
         allFine = False
+        print_test_failure(isPandigital, 1223334444555567890, expected1, actual1)
+        print_test_failure(isPandigital, 1023456879, expected2, actual2)
+        print_test_failure(isPandigital, 123456789, expected3, actual3)
 
     if allFine:
         print("Excellent, everything worked, carry on")
     else:
-        print("oh oh, something failed")
-        print("primes function works for 100: " + str(isPrimeWorking))
-        print("sieve function works for 10: " + str(isSieveWorking))
-        print("addToSieve function works for 20 and sieve up to 10: " +
-              str(isAddToSieveWorking))
-        print("noBlanks function works for [0,1,2,3,0,0,5,0]: " +
-              str(isNoBlanksWorking))
-        print("distinctPrimeFactors function works for 70: " +
-              str(isDistinctPrimeFactorsWorking))
-        print("divisors fuction works for 1, 30, and 7: " +
-            str(isDivisorsWorking))
-        print("pentN function works for 1, 10, and 20: " +
-              str(isPentNWorking))
-        print("isPent function works for 377 (false), "
-              "782 (true), and -10 (false): " + str(isIsPentWorking))
-        print("nthPent function works for 925 (25) and 1000 (0): " +
-              str(isNthPentWorking))
-        print("triN function works for 0 (0) and 10 (55): " +
-              str(isTriNWorking))
-        print("hexN function works for 8 (120) and 18 (630): " +
-              str(isHexNWorking))
-        print("nthDigit function works for (4321,3) (2) and (2,2) (-1): " +
-              str(isNthDigitWorking))
-        print("numDigits function works for 1, 2, 3, or 9 '1's: " +
-              str(isNumDigitsWorking))
-        print("isPrime function works for 997 (true) and 993 (false): " +
-              str(isIsPrimeWorking))
-        print("reverse function works for 12345, 1, and 12321: " +
-              str(isReverseWorking))
-        print(("isPandigital function works for 1223334444555567890 (true) " +
-               "and 1023456879 (true) and 123456789 (false): " +
-               str(isPandigitalWorking)))
+        print("oh oh, something failed, scroll up for details")
+
+
+if __name__ == "__main__":
+    print("This is a module of useful functions for Project Euler problems")
+    print("Some basic testing below, will replace with unittest framework later")
+    run_tests()
+    
