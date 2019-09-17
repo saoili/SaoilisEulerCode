@@ -73,6 +73,19 @@ def distinctPrimeFactors(n):
     return a
 
 
+def divisors(n):
+    """
+    returns an ordered list of all divisors of positive integer n
+    Note: this includes n, so is not 'proper divisors'
+    """
+    divs = []
+    for i in range(1, n+1):
+        if n % i == 0:
+            divs.append(i)
+
+    return divs
+
+
 def pentN(n):
     """takes integer n, returns the nth pentagonal number"""
     return n*(3*n-1)//2
@@ -202,6 +215,16 @@ if __name__ == "__main__":
     if not isDistinctPrimeFactorsWorking:
         allFine = False
 
+    """test divisors(n):
+    returns a list of all divisors of n
+    """
+    isDivisorsWorking = (
+        divisors(1) == [1] and divisors(30) == [1, 2, 3, 5, 6, 10, 15, 30]
+        and divisors(7) == [1, 7]
+    )
+    if not isDivisorsWorking:
+        allFine = False
+
     """test pentN (n):
     takes integer n, returns the nth pentagonal number"""
     isPentNWorking = pentN(1) == 1 and pentN(10) == 145 and pentN(20) == 590
@@ -285,6 +308,8 @@ if __name__ == "__main__":
               str(isNoBlanksWorking))
         print("distinctPrimeFactors function works for 70: " +
               str(isDistinctPrimeFactorsWorking))
+        print("divisors fuction works for 1, 30, and 7: " +
+            str(isDivisorsWorking))
         print("pentN function works for 1, 10, and 20: " +
               str(isPentNWorking))
         print("isPent function works for 377 (false), "
