@@ -1,3 +1,5 @@
+from sympy import isprime, primerange
+from collections import defaultdict
 import math
 
 
@@ -82,6 +84,15 @@ def divisors(n):
     for i in range(1, n+1):
         if n % i == 0:
             divs.append(i)
+
+    return divs
+
+
+def divisor_pairs(n):
+    divs = []
+    for i in range(1, int(math.sqrt(n))+1):
+        if n % i == 0:
+            divs.append([i, int(n/i)])
 
     return divs
 
@@ -174,6 +185,22 @@ def isPandigital(n):
         6 in digs and 7 in digs and 8 in digs and 9 in digs and 0 in digs)
 
 
+def canonical_form(n):
+    """
+    returns the canonical form in the form of {prime_divisor: power, prime_divisor: power}
+    """
+    primes = primerange(1, n+1)
+    canon = defaultdict(int)
+    for prime in primes:
+        # print(f"prime is {prime}")
+        while (n % prime == 0):
+            n /= prime
+            canon[prime] += 1
+        if n == 1:
+            return dict(canon)
+    return dict(canon)
+
+
 def print_test_failure(func, inputs, expected, actual):
     print(f"for function {func.__name__}, with input(s) {inputs}", end=" ")
     print(f"expected was {expected} and actual was {actual}")
@@ -241,6 +268,21 @@ def run_tests():
         print_test_failure(divisors, 1, expected1, actual1)
         print_test_failure(divisors, 30, expected2, actual2)
         print_test_failure(divisors, 7, expected3, actual3)
+
+    """test divisor_pairs(n):
+    returns a list of lists of [i, n/i] for all divisors i of n less than or equal to root n
+    """
+    expected1 = [[1, 1]]
+    expected2 = [[1, 30], [2, 15], [3, 10], [5, 6]]
+    expected3 = [[1, 25], [5, 5]]
+    actual1 = divisor_pairs(1)
+    actual2 = divisor_pairs(30)
+    actual3 = divisor_pairs(25)
+    if expected1 != actual1 or expected2 != actual2 or expected3 != actual3:
+        allFine = False
+        print_test_failure(divisor_pairs, 1, expected1, actual1)
+        print_test_failure(divisor_pairs, 30, expected2, actual2)
+        print_test_failure(divisor_pairs, 25, expected3, actual3)
 
     """test pentN (n):
     takes integer n, returns the nth pentagonal number"""
@@ -350,6 +392,20 @@ def run_tests():
         print_test_failure(isPandigital, 1223334444555567890, expected1, actual1)
         print_test_failure(isPandigital, 1023456879, expected2, actual2)
         print_test_failure(isPandigital, 123456789, expected3, actual3)
+
+    """test canonical_form"""
+    expected1 = {}
+    expected2 = {2: 2, 5: 3}
+    expected3 = {7: 2, 11: 1, 17: 1}
+    actual1 = canonical_form(1)
+    actual2 = canonical_form(500)
+    actual3 = canonical_form(9163)
+
+    if expected1 != actual1 or expected2 != actual2 or expected3 != actual3:
+        allFine = False
+        print_test_failure(isPandigital, 1, expected1, actual1)
+        print_test_failure(isPandigital, 500, expected2, actual2)
+        print_test_failure(isPandigital, 9163, expected3, actual3)
 
     if allFine:
         print("Excellent, everything worked, carry on")
